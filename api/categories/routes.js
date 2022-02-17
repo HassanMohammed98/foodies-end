@@ -6,6 +6,7 @@ const {
   categoryUpdate,
   fetchCategory,
   categoryCreate,
+  recipeCreate,
 } = require("./controllers");
 const upload = require("../../middleware/multer");
 
@@ -27,5 +28,6 @@ router.get("/", getCategories);
 router.post("/", categoryCreate);
 router.delete("/:categoryId", categoryDelete);
 router.put("/:categoryId", upload.single("image"), categoryUpdate);
+router.post("/:categoryId/recipe", recipeCreate);
 
 module.exports = router;

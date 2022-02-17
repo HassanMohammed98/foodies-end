@@ -8,14 +8,14 @@ exports.fetchRecipe = async (recipeId, next) => {
     next(error);
   }
 };
-exports.recipeCreate = async (req, res) => {
-  try {
-    const newRecipe = await Recipes.create(req.body);
-    return res.status(201).json(newRecipe);
-  } catch (error) {
-    next(error);
-  }
-};
+// exports.recipeCreate = async (req, res) => {
+//   try {
+//     const newRecipe = await Recipes.create(req.body);
+//     return res.status(201).json(newRecipe);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 exports.getRecipe = async (req, res) => {
   try {
     const recipe = await Recipes.find();
