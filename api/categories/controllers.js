@@ -1,4 +1,5 @@
 const Category = require("../../models/Category");
+const Recipe = require("../../models/Recipe");
 
 exports.fetchCategory = async (categoryId, next) => {
   try {
@@ -20,7 +21,7 @@ exports.categoryCreate = async (req, res) => {
 
 exports.getCategories = async (req, res) => {
   try {
-    const category = await Category.find();
+    const category = await Category.find().populate("recipes");
     return res.json(category);
   } catch (error) {
     next(error);
@@ -48,6 +49,25 @@ exports.categoryUpdate = async (req, res, next) => {
       { new: true, runValidators: true } // returns the updated product
     );
     res.json(category);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.recipeCreate = async (req, res, next) => {
+  try {
+    if (req.file) {
+      req.body.image = `${req.protocol}://${req.get("host")}/${req.file.path}`;
+      // req.body.image = req.body.image.replace("\\", "/");
+    }
+    const { categoryId } = req.params;
+    req.body.category = categoryId;
+    const newRecipe = await Recipe.create(req.body);
+    await Category.findOneAndUpdate(
+      { _id: categoryId },
+      { $push: { recipes: newRecipe._id } }
+    );
+    res.status(201).json(newRecipe);
   } catch (error) {
     next(error);
   }

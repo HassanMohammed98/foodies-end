@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 // Routes
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/api/Categories", Categories);
+app.use("/api/categories", Categories);
 app.use("/api/recipes", Recipes);
 app.use("/api/ingrediants", Ingrediants);
 
@@ -32,4 +32,4 @@ app.use((err, req, res, next) => {
     message: err.message || "Internal Server Error",
   });
 });
-app.listen(process.env.PORT || 8000);
+app.listen(process.env.PORT);
