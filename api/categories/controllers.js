@@ -4,14 +4,24 @@ const Recipe = require("../../models/Recipe");
 exports.fetchCategory = async (categoryId, next) => {
   try {
     const category = await Category.findById(categoryId);
-    return category;
+    if (category) {
+      return category;
+    } else {
+      const error = new Error("Category not found");
+      error.status = 404;
+      next(error);
+    }
   } catch (error) {
     next(error);
   }
 };
 
-exports.categoryCreate = async (req, res) => {
+exports.categoryCreate = async (req, res, next) => {
   try {
+    if (req.file) {
+      req.body.image = `/${req.file.path}`;
+      req.body.image = req.body.image.replace("\\", "/");
+    }
     const newCategory = await Category.create(req.body);
     return res.status(201).json(newCategory);
   } catch (error) {
@@ -19,7 +29,7 @@ exports.categoryCreate = async (req, res) => {
   }
 };
 
-exports.getCategories = async (req, res) => {
+exports.getCategories = async (req, res, next) => {
   try {
     const category = await Category.find().populate("recipes");
     return res.json(category);
@@ -57,8 +67,8 @@ exports.categoryUpdate = async (req, res, next) => {
 exports.recipeCreate = async (req, res, next) => {
   try {
     if (req.file) {
-      req.body.image = `${req.protocol}://${req.get("host")}/${req.file.path}`;
-      // req.body.image = req.body.image.replace("\\", "/");
+      req.body.image = `/${req.file.path}`;
+      req.body.image = req.body.image.replace("\\", "/");
     }
     const { categoryId } = req.params;
     req.body.category = categoryId;

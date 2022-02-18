@@ -10,7 +10,8 @@
     "multer": "^1.4.4",
     "nodemon": "^2.0.15",
     "passport": "^0.5.2",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7"
   },
   "name": "y",
   "version": "1.0.0",
@@ -29,6 +30,5 @@
     "url": "https://github.com/HassanMohammed98/foodies-end/issues"
   },
   "homepage": "https://github.com/HassanMohammed98/foodies-end#readme",
-  "devDependencies": {},
   "description": ""
 }
