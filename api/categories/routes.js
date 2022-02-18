@@ -13,21 +13,14 @@ const upload = require("../../middleware/multer");
 const router = express.Router();
 
 router.param("categoryId", async (req, res, next, categoryId) => {
-  const category = await fetchCategory(categoryId, next);
-  if (category) {
-    req.category = category;
-    next();
-  } else {
-    const err = new Error("Category Not Found");
-    err.status = 404;
-    next(err);
-  }
+  req.category = await fetchCategory(categoryId, next);
+  next();
 });
 
 router.get("/", getCategories);
-router.post("/", categoryCreate);
+router.post("/", upload.single("image"), categoryCreate);
 router.delete("/:categoryId", categoryDelete);
 router.put("/:categoryId", upload.single("image"), categoryUpdate);
-router.post("/:categoryId/recipe", recipeCreate);
+router.post("/:categoryId/recipe", upload.single("image"), recipeCreate);
 
 module.exports = router;

@@ -6,6 +6,7 @@ const Recipes = require("./api/recipes/routes");
 const Ingrediants = require("./api/ingrediants/routes");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
+const path = require("path");
 
 dotenv.config();
 const app = express();
@@ -23,6 +24,8 @@ app.use((req, res, next) => {
 // Routes
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use("/api/media", express.static(path.join(__dirname, "media")));
+
 app.use("/api/categories", Categories);
 app.use("/api/recipes", Recipes);
 app.use("/api/ingrediants", Ingrediants);
