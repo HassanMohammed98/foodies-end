@@ -10,6 +10,10 @@ exports.fetchIngredient = async (ingredientId, next) => {
 };
 exports.ingredientCreate = async (req, res) => {
   try {
+    if (req.file) {
+      req.body.image = `/${req.file.path}`;
+      req.body.image = req.body.image.replace("\\", "/");
+    }
     const newIngredient = await Ingredient.create(req.body);
     return res.status(201).json(newIngredient);
   } catch (error) {

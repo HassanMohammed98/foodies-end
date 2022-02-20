@@ -72,6 +72,7 @@ exports.recipeCreate = async (req, res, next) => {
     }
     const { categoryId } = req.params;
     req.body.category = categoryId;
+    req.body.ingredients = req.body.ingredients.split(",");
     const newRecipe = await Recipe.create(req.body);
     await Category.findOneAndUpdate(
       { _id: categoryId },

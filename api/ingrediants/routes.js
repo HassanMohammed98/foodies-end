@@ -24,7 +24,7 @@ router.param("ingredientId", async (req, res, next, ingredientId) => {
 });
 
 router.get("/", getIngredient);
-router.post("/", ingredientCreate);
+router.post("/", upload.single("image"), ingredientCreate);
 router.delete("/:ingredientId", ingredientDelete);
 router.put("/:ingredientId", upload.single("image"), ingredientUpdate);
 
