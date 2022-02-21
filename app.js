@@ -4,6 +4,7 @@ const connectDb = require("./database");
 const Categories = require("./api/categories/routes");
 const Recipes = require("./api/recipes/routes");
 const Ingrediants = require("./api/ingrediants/routes");
+const favoritesRouter = require("./api/favorites/routes");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const path = require("path");
@@ -29,6 +30,7 @@ app.use("/api/media", express.static(path.join(__dirname, "media")));
 app.use("/api/categories", Categories);
 app.use("/api/recipes", Recipes);
 app.use("/api/ingrediants", Ingrediants);
+app.use("/api/favorites", favoritesRouter);
 
 app.use((err, req, res, next) => {
   res.status(err.status || 500).json({
